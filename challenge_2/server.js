@@ -14,27 +14,58 @@ app.get('/', (req, res) => {
   res.send('Hello World');
 })
 
+
 app.post('/upload_JSON', (req, res) => {
-  var input = req.body.input;
-  var data = jsonToCSV(JSON.parse(input));
-  console.log(__dirname);
-  fs.writeFile(path.join(__dirname, 'data', 'csv_report.csv'), data, (err) => {
+  console.log('req.body:', req.body);
+  console.log(req.body.filename);
+  fs.readFile(__dirname + `/samples/${req.body.filename}`, "utf8", (err, data) => {
     if (err) {
-      console.log(err);
-      res.status(400).send();
+      console.log('ERROR:', err)
+      res.status(500).send(err);
     } else {
-      fs.readFile(path.join(__dirname, 'data', 'csv_report.csv'), (err, fileData) => {
+      var resData= JSON.parse(data);
+      console.log('resData', resData);
+      fs.writeFile(path.join(__dirname, 'data', 'csv_report.csv'), jsonToCSV(resData), (err) => {
         if (err) {
+          console.log('ERROR:', err);
           res.status(400).send();
         } else {
-          // res.send(fileData.toString());
-          res.sendFile(path.join(__dirname, 'data', 'csv_report.csv'));
+          fs.readFile(path.join(__dirname, 'data', 'csv_report.csv'), (err, fileData) => {
+            if (err) {
+              res.status(400).send();
+            } else {
+              res.sendFile(path.join(__dirname, 'data', 'csv_report.csv'))
+            }
+          } )
         }
       })
-      // res.sendFile(path.join(__dirname, 'data', 'csv_report.csv'));
     }
   })
 })
+
+// app.post('/upload_JSON', (req, res) => {
+//   var input = req.body.input;
+//   console.log('RAN');
+//   console.log(console.log(req.body));
+//   var data = jsonToCSV(JSON.parse(input));
+//   console.log(__dirname);
+//   fs.writeFile(path.join(__dirname, 'data', 'csv_report.csv'), data, (err) => {
+//     if (err) {
+//       console.log(err);
+//       res.status(400).send();
+//     } else {
+//       fs.readFile(path.join(__dirname, 'data', 'csv_report.csv'), (err, fileData) => {
+//         if (err) {
+//           res.status(400).send();
+//         } else {
+//           // res.send(fileData.toString());
+//           res.sendFile(path.join(__dirname, 'data', 'csv_report.csv'));
+//         }
+//       })
+//       // res.sendFile(path.join(__dirname, 'data', 'csv_report.csv'));
+//     }
+//   })
+// })
 
 
 // app.post('/upload_JSON', (req, res) => {
@@ -50,6 +81,7 @@ app.listen(port, () => console.log(`CSV Server listening at http://localhost:${p
 
 
 var jsonToCSV = function(obj) {
+  console.log("obj:", obj);
   var result = '';
 
   var objKeys = Object.keys(obj);

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="app.js"></script>
   </head>
   <body>
@@ -8,11 +9,18 @@
       <h1>Convert JSON obj to CVS</h1>
       <h3>Insert Text Here:</h3>
     </div>
-    <form method="POST" action="/upload_JSON">
-      <textarea rows="50" cols='70' name="input" ></textarea>
-      <!-- <input type="text" name="input"> -->
-      <input type="submit" value="Download CVS file">
+    <form action="/upload_JSON" method="POST">
+      <input type="file" id="input" name="filename">
+      <input type="submit" value="download CSV convertion">
     </form>
+    <!-- <form method="POST" action="/upload_JSON">
+      <form>
+      <textarea id="input" rows="50" cols='70' name="input" ></textarea>
+      <input type="text" name="input">
+      <input type="submit" value="Download CVS file">
+    </form> -->
+    <!-- <button onclick="makeRequest(document.getElementById('input').value)">POST TEST BUTTON</button> -->
+    <div id='response'>Jquery should change this text</div>
   </body>
 </html>
 
