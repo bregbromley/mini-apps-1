@@ -1,0 +1,28 @@
+{
+  "name": "challenge_3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-react": "^7.9.4",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "sequelize": "^5.21.6"
+  },
+  "devDependencies": {
+    "babel-watch": "^7.0.0",
+    "nodemon": "^2.0.3"
+  },
+  "scripts": {
+    "test": "npm test",
+    "start": "nodemon --watch server.js",
+    "babel": "--watch ./node_modules/.bin/babel client --out-dir public --presets @babel/preset-react --source-maps inline "
+  },
+  "author": "Breg Bromley",
+  "license": "ISC"
+}
